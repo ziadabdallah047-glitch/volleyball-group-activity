@@ -37,7 +37,7 @@ The dataset is **not** included in this repository. Download it from the link ab
 | B7 | **Two-stage model:** player-level BiLSTM → pool over all players → scene-level BiLSTM | group |
 | B8 | **B7 with team-wise pooling:** players split into two teams, pooled separately, then concatenated | group |
 
-![Model architecture](assets/model_diagram.png)
+![Model architecture](assets/model_diagram.jpeg)
 
 ## Results (test set, accuracy %)
 
@@ -65,7 +65,7 @@ The dataset is **not** included in this repository. Download it from the link ab
 | l_winpoint | 55.9 % |
 | r_winpoint | 57.0 % |
 
-![B8 confusion matrix](results/b8_confusion_matrix.jpeg)
+![B8 confusion matrix](results/b8_confusion_matrix.png)
 
 **Error analysis.** Six of the eight classes reach 81–91 % recall. The **win-point** classes are the weak spot (about 56–57 % recall): they are most often confused with *pass* classes (e.g. `r_winpoint` predicted as `l-pass` 17 times and as `r-pass` 10 times). They also have the fewest samples. A plausible explanation is that the moments around a point look similar to a pass in a 9-frame window, but this was not verified.
 
