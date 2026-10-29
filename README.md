@@ -17,8 +17,11 @@ PyTorch implementation of a series of baselines (B1–B8) for recognizing **team
 - **Dataset:** [Volleyball dataset](https://github.com/mostafa-saad/deep-activity-rec) (55 videos, 8 group-activity labels, 9 player-action labels, bounding boxes per player).
 - **Group activities (8):** `l_set, r_set, l-pass, r-pass, l-spike, r_spike, l_winpoint, r_winpoint`.
 - **Player actions (9):** waiting, setting, digging, falling, spiking, blocking, jumping, moving, standing.
-- **Split (by video):** train 1 3 6 7 10 13 15 16 18 22 23 31 32 36 38 39 40 41 42 48 50 52 53 54 · val 0 2 8 12 17 19 24 26 27 28 30 33 46 49 51 · test 4 5 9 11 14 20 21 25 29 34 35 37 43 44 45 47.
-- Each sample is the target frame plus a temporal window (5 frames before, 4 after = 9 frames).
+- **Split (by video):**
+  - train: 1 3 6 7 10 13 15 16 18 22 23 31 32 36 38 39 40 41 42 48 50 52 53 54
+  - val: 0 2 8 12 17 19 24 26 27 28 30 33 46 49 51
+  - test: 4 5 9 11 14 20 21 25 29 34 35 37 43 44 45 47
+- Each sample is the target frame plus 4 frames before and 4 after it (9 frames in total).
 
 The dataset is **not** included in this repository. Download it from the link above.
 
@@ -34,9 +37,7 @@ The dataset is **not** included in this repository. Download it from the link ab
 | B7 | **Two-stage model:** player-level BiLSTM → pool over all players → scene-level BiLSTM | group |
 | B8 | **B7 with team-wise pooling:** players split into two teams, pooled separately, then concatenated | group |
 
-```
-frames (9) ──► ResNet-50 (per player crop) ──► player BiLSTM ──► team-wise max pool ──► scene BiLSTM ──► group activity
-```
+![Model architecture](assets/model_diagram.png)
 
 ## Results (test set, accuracy %)
 
@@ -46,7 +47,7 @@ frames (9) ──► ResNet-50 (per player crop) ──► player BiLSTM ──�
 | B3 – fine-tuned person classification | 63.9 | 68.1 |
 | B4 – temporal model, image features | 72.7 | 63.1 |
 | B6 – two-stage w/o player LSTM | 70.6 | 74.7 |
-| B7 – two-stage (all-player pooling) | 75.5 | – |
+| B7 – two-stage (all-player pooling) | 75.5 | 80.2 |
 | **B8 – two-stage + team-wise pooling** | **82.6** | 81.9 |
 
 \* Reference numbers from the dataset's README. They are **not directly comparable** (different backbone and experimental setup). B5 is a player-level model, so it is not in this table.
@@ -83,6 +84,7 @@ frames (9) ──► ResNet-50 (per player crop) ──► player BiLSTM ──�
 ├── baseline_6/   baseline_6_s_1.py, baseline_6_s_2.py, baseline_6_test.py
 ├── baseline_7/   baseline_7_s_1.py, baseline_7_s_2.py, baseline_7_test.py
 ├── baseline_8/   baseline_8_s_1.py, baseline_8_s_2.py, baseline_8_test.py
+├── assets/       model_diagram.png
 ├── results/      b8_confusion_matrix.png
 └── requirements.txt
 ```
