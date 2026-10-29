@@ -37,7 +37,7 @@ The dataset is **not** included in this repository. Download it from the link ab
 | B7 | **Two-stage model:** player-level BiLSTM → pool over all players → scene-level BiLSTM | group |
 | B8 | **B7 with team-wise pooling:** players split into two teams, pooled separately, then concatenated | group |
 
-![Model architecture](assets/model_diagram.jpeg)
+![Model architecture](assets/model_diagram.png)
 
 ## Results (test set, accuracy %)
 
